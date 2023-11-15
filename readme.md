@@ -13,3 +13,14 @@ For formate codes.
 ```
 npm i -D prettier
 ```
+```js
+// .pritterrc files
+{
+    "singleQuote": false,
+    "bracketSpacing": true,
+    "tabWidth": 2,
+    "trailingComma": "es5",
+    "semi": true
+}
+
+```
