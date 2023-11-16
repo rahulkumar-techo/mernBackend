@@ -1,123 +1,198 @@
-MODEL LINK : [https://app.eraser.io/workspace/YtPqZ1VogxGy1jzIDkzj](https://app.eraser.io/workspace/YtPqZ1VogxGy1jzIDkzj)
+# Custom Api and error handling :
 
-## While setup folder
+### EXPRESS REQUEST :-
 
-GIT IGNORE GENERATOR : [https://www.toptal.com/developers/gitignore](https://www.toptal.com/developers/gitignore)
+EXPRESS JS REQUEST `req.body` : [https://expressjs.com/en/4x/api.html#req.body](https://expressjs.com/en/4x/api.html#req.body)
 
-It's a dev dependencie to the
-Restart server
+EXPRESS JS REQUEST `req.cookies`: [https://expressjs.com/en/4x/api.html#req.cookies](https://expressjs.com/en/4x/api.html#req.cookies)
+
+EXPRESS JS REQUEST `req.params`: [https://expressjs.com/en/4x/api.html#req.params](https://expressjs.com/en/4x/api.html#req.params)
+
+EXPRESS JS REQUEST `req.query`: [https://expressjs.com/en/4x/api.html#req.query](https://expressjs.com/en/4x/api.html#req.query)
+
+---
+
+### EXPRESS RESPONSE :-
+
+//methods
+EXPRESS JS RESPONSE `res.cookie()`:[https://expressjs.com/en/4x/api.html#res.cookie](https://expressjs.com/en/4x/api.html#res.cookie)
+
+EXPRESS JS RESPONSE `res.clearCookie()`:[https://expressjs.com/en/4x/api.html#res.clearCookie](https://expressjs.com/en/4x/api.html#res.clearCookie)
+
+EXPRESS JS RESPONSE `res.download()`:[https://expressjs.com/en/4x/api.html#res.download](https://expressjs.com/en/4x/api.html#res.download)
+
+EXPRESS JS RESPONSE `res.json()`:[https://expressjs.com/en/4x/api.html#res.json](https://expressjs.com/en/4x/api.html#res.json)
+
+EXPRESS JS RESPONSE `res.redirect()`:[https://expressjs.com/en/4x/api.html#res.redirect](https://expressjs.com/en/4x/api.html#res.redirect)
+
+EXPRESS JS RESPONSE `res.render()`:[https://expressjs.com/en/4x/api.html#res.render](https://expressjs.com/en/4x/api.html#res.render)
+
+EXPRESS JS RESPONSE `res.send()`:[https://expressjs.com/en/4x/api.html#res.send](https://expressjs.com/en/4x/api.html#res.send)
+
+EXPRESS JS RESPONSE `res.sendfile()`:[https://expressjs.com/en/4x/api.html#res.sendFile](https://expressjs.com/en/4x/api.html#res.sendFile)
+
+EXPRESS JS RESPONSE `res.status()`:[https://expressjs.com/en/4x/api.html#res.status](https://expressjs.com/en/4x/api.html#res.status)
+
+EXPRESS JS RESPONSE `ETC..... All of the Above properties and methods have unique functionality so PLAY try and catch these methods`
+
+---
+
+---
+
+COOKIE-PARSER AND MIDDLEWARE
+
+DOCS <=:=> `COOKIE-PARSER` : [https://www.npmjs.com/package/cookie-parser](https://www.npmjs.com/package/cookie-parser)
 
 ```
-npm install nodemon
+npm i cookie-parser cors
 ```
 
-For formate codes.
+`MIDDLEWARE` :-
 
-```
-npm i -D prettier
-```
+HOW MIDDLEWARE WORK AND USE CASE : -[https://mindmajix.com/middleware-in-node-js](https://mindmajix.com/middleware-in-node-js)
+
+you have to use app.use() when you need to setting middleare or configurations
+
+`CORS`:[https://www.npmjs.com/package/cors](https://www.npmjs.com/package/cors)
 
 ```js
-// .pritterrc files
-{
-    "singleQuote": false,
-    "bracketSpacing": true,
-    "tabWidth": 2,
-    "trailingComma": "es5",
-    "semi": true
+app.use(
+  cors({
+    origin: process.env.CORS_ORIGIN,
+  })
+);
+```
+
+Express js `express.static` use for `static files` like images , files,videos and many more things.
+
+EXPRESS js `express.static` :-
+[https://expressjs.com/en/4x/api.html#express.static](https://expressjs.com/en/4x/api.html#express.static)
+
+```js
+// express.json() method convert json into object and if you want specifiy limit , how much data want ,then you can set limit and explore more ...
+
+app.use(express.json({ limit: "30kb" }));
+app.use(express.urlencoded({ extended: true }));
+app.use(express.static());
+```
+
+---
+
+---
+
+```js
+// In app.js
+import express from "express";
+const app = express();
+
+app.on("error", (error) => {
+  console.log("server is not able to talk with database");
+  throw error;
+});
+
+export default app;
+```
+
+**revision :-** async always return promise .
+
+```js
+// sec/index.js
+import connectDB from "./db/index.js";
+import dotenv from "dotenv";
+import app from "./app.js";
+import "colors";
+
+dotenv.config({
+  path: "./env",
+});
+
+const port = process.env.PORT || 8080;
+
+connectDB()
+  .then(() => {
+    app.listen(port, () => {
+      console.log(`Server is running at port ${port}`);
+    });
+  })
+  .catch((error) => {
+    console.log(`mongo db Connection failed ${error}`.bgRed.bold);
+  });
+```
+
+# UTILS
+
+```js
+//         src/asyncHandler.js
+// asyncHandler function takes a function <fn> as a prameter and after working on that <fn> return a function <fn>
+
+const asyncHandler = (fn) => {
+  async (req, res, next) => {
+    try {
+      await fn(req, res, next);
+    } catch (error) {
+      res.status(error.code || 500).json({
+        success: false,
+        message: error.message,
+      });
+    }
+  };
+};
+```
+### Another way :-
+```js
+const asyncHandler =(requestHandler)=>{
+
+    (req,res,next)=>{
+        Promise.resolve(requestHandler(re,res,next))
+        .catch((error)=>next(error))
+    }   
 }
 
+export {asyncHandler};
 ```
 
+# Error Handle
 
+Error Hangling :-[https://nodejs.org/docs/latest-v19.x/api/errors.html](https://nodejs.org/docs/latest-v19.x/api/errors.html)
 
-## While MONGODB CONNECTION 🌎
----
-
-
-#### .ENV, MONGOOS Express file Import
-
-```
- npm i mongoose express dotenv
-```
-
-Cautions 💀 : ALways keep code into TRY CATCH
-
-CONNECTION WITH MONGOOSE : [https://mongoosejs.com/docs/connections.html](https://mongoosejs.com/docs/connections.html)
-
-I have add an extra npm , which is also a dev depedend
-
-**use** : `clear terminal / console vision and look attractive `
-
-HERE IS DOCS ON COLORS: [https://www.npmjs.com/package/colors](https://www.npmjs.com/package/colors)
-```
-npm install color 
-```
----
----
+Descriptions : `extened error class`
 
 ```js
-// in db.js
-// first approch  [All Code in db]
-
-import mongoose from "mongoose";
-import DB_NAME from "./constants.js";
-import "dotenv/config";
-import app from "./app.js";
-
-
-;(async () => {
-  try {
-   await mongoose.connect(`${process.env.MONGODB_URL}/DB_NAME`);
-   app.on("error",(error)=>{
-    console.log("database not able to talk")
-    throw error
-   });
-
-   app.listen(process.env.PORT,()=>{
-    console.log("app is listening on port",process.env.PORT);
-   })
-  } catch (error) {
-    console.log({ error });
-    throw error;
+class apiError extends Error {
+  constructor(
+    statuscode,
+    message = "Something went wrong",
+    errors = [],
+    stack = ""
+  ) {
+    super(message);
+    this.statuscode = statuscode;
+    this.data = null;
+    this.message = message;
+    this.success = false;
+    this.errors = errors;
+    
+    if(stack){
+        this.stack=stack
+    }
+    else{
+        Error.captureStackTrace(this,this.constructor)
+    }
   }
-})
-()
-```
+}
 
-#### Explore more About Process on node js  :
-`Process on Node js` 
+export {apiError};
 
-PROCESS DOC LINK : [https://nodejs.org/api/process.html](https://nodejs.org/api/process.html)
----
-to check host `afterConnection.connection.host`
-
-As early as possible in your application, import and configure dotenv:
-
-DOT ENV FILE :- [https://www.npmjs.com/package/dotenv](https://www.npmjs.com/package/dotenv)
-
-```js
-// index.mjs (ESM)
-import 'dotenv/config' // see https://github.com/motdotla/dotenv#how-do-i-use-dotenv-with-import
-
-//another way 
-import dotenv from "dotenv";
-dotenv.config({
-    path:"./env"
-});
-connectDB();
-
-Keep one thing in your mind , you have to do some changes in package.json file , which is nothing more ,just to add `-r dotenv/config --expreimental-json-modules` . when dotenv will bring a stable version of dotenv (npm) then you don't need to add extenally and this one is a expreimental` .
 
 ```
 
 
-#### 2nd Way
 
-Assignments :-
-```js
- const afterConnection=  await mongoose.connect(`${process.env.MONGODB_UR}/${DB_NAME}`)
-// Explore Process in node js as above link has provided
-// after connecting with mongodb check connection what return (afterConnection) ? 
 
-```
+
+Assignment :
+what is inside this.data
+
+git config --global core.autocrlf input
+git rm --cached package-lock.json
+git add package-lock.json

@@ -14,7 +14,7 @@ const connectDB = async ()=>{
         
     } catch (error) {
         console.log("MONGOOSE CONNECTION FAILED".bgRed.bold,error);
-        process.exit();
+        process.exit(1);
     }
 }
 
