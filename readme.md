@@ -193,6 +193,5 @@ export {apiError};
 Assignment :
 what is inside this.data
 
-git config --global core.autocrlf input
-git rm --cached package-lock.json
-git add package-lock.json
+```git config --global core.autocrlf input```
+
