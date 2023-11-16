@@ -1,32 +1,30 @@
-# USER AND VIDEO MODEL WITH HOOKS AND JWT 
 
-### mongoose-aggregate-paginate-v2 :
-[https://www.npmjs.com/package/mongoose-aggregate-paginate-v2](https://www.npmjs.com/package/mongoose-aggregate-paginate-v2)
+# CLOUDINARY
+cloudinary use to upload files , pdf ,images and so on ...
 
-#### Core bcrypt 
+Cloudinary Dashbord : [https://console.cloudinary.com/pm/c-6084e2b5780b7434517b161352788e/getting-started](https://console.cloudinary.com/pm/c-6084e2b5780b7434517b161352788e/getting-started)
+
 ```
-npm i bcrypt
+npm install cloudinary
+```
+Multer Npm and Docs : [https://www.npmjs.com/package/multer](https://www.npmjs.com/package/multer)
+
+```
+npm install multer
 ```
 
-
-
-### Jsonwebtoken
 ```
-npm install jsonwebtoken
+import {v2 as cloudinary} from 'cloudinary';
+          
+cloudinary.config({ 
+  cloud_name: '', 
+  api_key: '', 
+  api_secret: '' 
+});
 ```
 ---
+ASSIGMENT : 
 
-Mongoose pre middleware : [https://mongoosejs.com/docs/middleware.html](https://mongoosejs.com/docs/middleware.html)
+explore more what is multer and how does it works .
 
-
-
-```
-<=====operations======>
-validate
-save
-remove
-updateOne
-deleteOne
-```
-
-.pre("operations",usenormal async functios)
+used Diskstore
