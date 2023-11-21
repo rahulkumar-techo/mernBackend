@@ -19,4 +19,12 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
 app.use(cookieParser());
 
+// routes import segrigation of file
+
+import router from "./routes/user.routes.js";
+
+// routes declearations
+app.use("/api/v1/users",router);
+
+
 export default app;
