@@ -1,30 +1,26 @@
 
-# CLOUDINARY
-cloudinary use to upload files , pdf ,images and so on ...
+## LOGIN LOGIC :
+- Get user ddetails from frotend 
+- validation - input field should'nt be empty
+- check if user already exist : username ,email
+- upload them  to cloudinary ,avtar
+- create user object - create entry in db
+- remove password and refresh token field from response
+- check for user creation 
+- return res
+#### validation - input field should'nt be empty
+```js
+// if it return meaens input field empty .
+ [username,email,fullname,password].some((field)=> field?.tirm()==="")
+ 
+ ```
 
-Cloudinary Dashbord : [https://console.cloudinary.com/pm/c-6084e2b5780b7434517b161352788e/getting-started](https://console.cloudinary.com/pm/c-6084e2b5780b7434517b161352788e/getting-started)
+req.files of multer 
 
-```
-npm install cloudinary
-```
-Multer Npm and Docs : [https://www.npmjs.com/package/multer](https://www.npmjs.com/package/multer)
+```js
+// which field you  don't want 
 
+await User.findById(isUserStored._id).select(
+    "-password -refreshToken "
+  )
 ```
-npm install multer
-```
-
-```
-import {v2 as cloudinary} from 'cloudinary';
-          
-cloudinary.config({ 
-  cloud_name: '', 
-  api_key: '', 
-  api_secret: '' 
-});
-```
----
-ASSIGMENT : 
-
-explore more what is multer and how does it works .
-
-used Diskstore
